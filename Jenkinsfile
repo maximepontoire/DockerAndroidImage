@@ -6,7 +6,7 @@ node () {
   }
 
   stage ('Create Env') {
-      def buildEnv = docker.build 'androidsdk24:1.0'
+      def buildEnv = docker.build 'androidsdk25:1.0'
   }
 
 }
