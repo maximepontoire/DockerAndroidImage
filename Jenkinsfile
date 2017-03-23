@@ -6,7 +6,7 @@ node () {
   }
 
   stage ('Create Env') {
-      sh 'docker build -t "androidsdk24:1.0" .'
+      sh '/usr/local/bin/docker build -t "androidsdk24:1.0" .'
   }
 
 }
