@@ -51,7 +51,7 @@ ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
 ENV PATH $PATH:$GRADLE_HOME/bin
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-RUN echo y | $ANDROID_HOME/tools/bin/sdkmanager "tools" "platform-tools" "platforms;android-25" "build-tools;25.0.2" "extras;android;m2repository" "extras;google;m2repository" --proxy=http --proxy_host=arborea-vip01.socrate.vsct.fr --proxy_port=3128  --no_https
+RUN echo y | $ANDROID_HOME/tools/bin/sdkmanager "tools" "platform-tools" "platforms;android-25" "build-tools;25.0.2" "extras;android;m2repository" "extras;google;m2repository"
 
 # Git to pull external repositories of Android app projects
 RUN apt-get install -y --no-install-recommends git
@@ -64,14 +64,3 @@ RUN mkdir -p $ANDROID_HOME/.android && \
     keytool -genkey -v -keystore $ANDROID_HOME//.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -dname "CN=Android Debug,O=Android,C=US"
 
 # TODO : DEFINE WORKDIR $ANDROID_HOME/.android
-
-# Certificat for artifactory
-RUN sudo mkdir -p /usr/local/share/ca-certificates/ && \
- wget http://gitlab.socrate.vsct.fr/KTNCLOUD/swarm/raw/master/config-scripts/VSC-CA_SHA1.pem -O /usr/local/share/ca-certificates/VSC-CA_SHA1.crt && \
- wget http://gitlab.socrate.vsct.fr/KTNCLOUD/swarm/raw/master/config-scripts/VSC-CA_SHA2.pem -O /usr/local/share/ca-certificates/VSC-CA_SHA2.crt && \
- echo "capath=/etc/ssl/certs/" >> ~/.curlrc && \
- echo "cacert=/etc/ssl/certs/ca-certificates.crt" >> ~/.curlrc && \
- update-ca-certificates
-
- # Cacerts pour SSL
- RUN wget http://gitlab.socrate.vsct.fr/KTNCLOUD/swarm/raw/master/config-scripts/cacerts -O $JAVA_HOME/jre/lib/security/cacerts
